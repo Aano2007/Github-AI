@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background-color: #010409;
+  color: #FFF8F0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* --- Gooey Blob Button --- */
+.blob-btn {
+  z-index: 1;
+  position: relative;
+  padding: 16px 36px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: color 0.5s;
+  cursor: pointer;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(22, 46, 147, 0.6);
+}
+
+.blob-btn:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #162E93;
+  border-radius: 30px;
+  pointer-events: none;
+}
+
+.blob-btn__inner {
+  z-index: -1;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(22, 46, 147, 0.15) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.blob-btn__blobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url('#goo');
+}
+
+.blob-btn__blob {
+  position: absolute;
+  top: 2px;
+  width: 25%;
+  height: 100%;
+  background: #162E93;
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s;
+}
+
+@supports (filter: url('#goo')) {
+  .blob-btn__blob {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+}
+
+.blob-btn__blob:nth-child(1) { left: 0%;   transition-delay: 0s; }
+.blob-btn__blob:nth-child(2) { left: 30%;  transition-delay: 0.08s; }
+.blob-btn__blob:nth-child(3) { left: 60%;  transition-delay: 0.16s; }
+.blob-btn__blob:nth-child(4) { left: 90%;  transition-delay: 0.24s; }
+
+.blob-btn:hover .blob-btn__blob {
+  transform: translateZ(0) scale(1.7);
+}
+
+@supports (filter: url('#goo')) {
+  .blob-btn:hover .blob-btn__blob {
+    transform: translateZ(0) scale(1.4);
+  }
+}
+
+/* MD3 CSS custom properties */
+:root {
+  --md-primary: #ADC6FF;
+  --md-on-primary: #002E6C;
+  --md-primary-container: #0042A0;
+  --md-on-primary-container: #D9E2FF;
+  --md-secondary: #BBC3D4;
+  --md-on-secondary: #252D3E;
+  --md-secondary-container: #3B4355;
+  --md-on-secondary-container: #D7DFEF;
+  --md-tertiary: #D9B9FF;
+  --md-on-tertiary: #3B0077;
+  --md-tertiary-container: #541A99;
+  --md-on-tertiary-container: #EDD9FF;
+  --md-error: #FFB4AB;
+  --md-on-error: #690005;
+  --md-error-container: #93000A;
+  --md-on-error-container: #FFDAD6;
+  --md-background: #111318;
+  --md-on-background: #E2E2E9;
+  --md-surface: #111318;
+  --md-on-surface: #E2E2E9;
+  --md-surface-variant: #44464F;
+  --md-on-surface-variant: #C4C6D0;
+  --md-surface-dim: #111318;
+  --md-surface-bright: #37393E;
+  --md-surface-container-lowest: #0C0E13;
+  --md-surface-container-low: #191C20;
+  --md-surface-container: #1D2024;
+  --md-surface-container-high: #282A2F;
+  --md-surface-container-highest: #33353A;
+  --md-outline: #8E9099;
+  --md-outline-variant: #44464F;
+  --md-inverse-surface: #E2E2E9;
+  --md-inverse-on-surface: #2F3036;
+  --md-inverse-primary: #1B4FBF;
+  --md-scrim: #000000;
+  --md-shadow: #000000;
+}
+
+/* --- Agent-OS Repo Page --- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.md3-surface {
+  background-color: #1D2024;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.md3-card {
+  --hover-bg: #212327;
+  --hover-border: rgba(255, 255, 255, 0.1);
+  --hover-glow: rgba(59, 130, 246, 0.08);
+  border-radius: 28px;
+  transition: all 0.25s ease;
+}
+
+.md3-card:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--hover-border);
+  box-shadow: 0 8px 32px var(--hover-glow);
+  transform: translateY(-2px);
+}
+
+.progress-bg {
+  background-color: rgba(255, 255, 255, 0.05);
+  height: 4px;
+  border-radius: 2px;
+}

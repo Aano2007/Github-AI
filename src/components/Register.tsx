@@ -1,0 +1,128 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
+import { auth, googleProvider } from '../firebase';
+import { Activity, UserPlus, Eye, EyeOff } from 'lucide-react';
+
+const GoogleIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+  </svg>
+);
+
+export const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.password) { setError('All fields are required.'); return; }
+    if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return; }
+    setLoading(true);
+    setError('');
+    try {
+      const { user } = await createUserWithEmailAndPassword(auth, form.email, form.password);
+      await updateProfile(user, { displayName: form.name });
+      router.push('/connect');
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code;
+      setError(code === 'auth/email-already-in-use' ? 'Email already in use.' : 'Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    setError('');
+    try {
+      await signInWithPopup(auth, googleProvider);
+      router.push('/connect');
+    } catch {
+      setError('Google sign in failed. Please try again.');
+    }
+  };
+
+  return (
+    <div className="w-screen h-screen bg-background flex flex-col">
+      <nav className="w-full p-6 flex items-center bg-background/30 backdrop-blur-md border-b border-white/5">
+        <Link href="/" className="flex items-center gap-3">
+          <Activity className="text-secondary w-8 h-8" />
+          <span className="font-black text-2xl tracking-widest text-cream uppercase">Agent.OS</span>
+        </Link>
+      </nav>
+
+      <div className="flex-1 flex items-center justify-center px-6">
+        <div className="w-full max-w-md">
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-[0_0_40px_rgba(22,46,147,0.3)] [background:linear-gradient(135deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)]">
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-16 h-16 bg-secondary/30 rounded-full flex items-center justify-center border border-secondary/50 shadow-[0_0_30px_rgba(22,46,147,0.5)] mb-4">
+                <UserPlus className="w-8 h-8 text-cream" />
+              </div>
+              <h1 className="text-3xl font-black tracking-widest text-cream uppercase mb-1">Create Account</h1>
+              <p className="text-beige/50 text-sm tracking-wide">Join Agent.OS today</p>
+            </div>
+
+            <button onClick={handleGoogle} className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-white/5 border border-white/10 text-cream font-semibold text-sm hover:bg-white/10 transition-colors mb-6">
+              <GoogleIcon />
+              Continue with Google
+            </button>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-beige/30 text-xs uppercase tracking-widest">or</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input type="text" placeholder="Full name" value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-cream placeholder-beige/30 text-sm focus:outline-none focus:border-secondary/70 transition-colors" />
+              <input type="email" placeholder="Email address" value={form.email}
+                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-cream placeholder-beige/30 text-sm focus:outline-none focus:border-secondary/70 transition-colors" />
+              <div className="relative">
+                <input type={showPassword ? 'text' : 'password'} placeholder="Password (min. 8 characters)" value={form.password}
+                  onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-cream placeholder-beige/30 text-sm focus:outline-none focus:border-secondary/70 transition-colors" />
+                <button type="button" onClick={() => setShowPassword(s => !s)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-beige/40 hover:text-cream transition-colors">
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {error && <p className="text-red-400 text-xs text-center">{error}</p>}
+              <button type="submit" disabled={loading} className="blob-btn w-full mt-2 disabled:opacity-50">
+                <span className="relative z-10">{loading ? 'Creating account...' : 'Create Account'}</span>
+                <span className="blob-btn__inner">
+                  <span className="blob-btn__blobs">
+                    <span className="blob-btn__blob"></span><span className="blob-btn__blob"></span>
+                    <span className="blob-btn__blob"></span><span className="blob-btn__blob"></span>
+                  </span>
+                </span>
+              </button>
+            </form>
+          </div>
+          <p className="text-center text-beige/40 text-sm mt-6">
+            Already have an account?{' '}
+            <Link href="/signin" className="text-secondary hover:text-cream transition-colors font-semibold">Sign In</Link>
+          </p>
+        </div>
+      </div>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="hidden">
+        <defs><filter id="goo">
+          <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo"></feColorMatrix>
+          <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+        </filter></defs>
+      </svg>
+    </div>
+  );
+};
