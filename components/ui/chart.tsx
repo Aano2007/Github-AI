@@ -69,6 +69,16 @@ function ChartContainer({
   )
 }
 
+// Sanitize CSS values to prevent XSS via dangerouslySetInnerHTML
+function sanitizeCSSValue(value: string): string {
+  // Allow only safe CSS color values: hex, rgb/rgba, hsl/hsla, named colors, css variables
+  return /^(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\)|var\(--[\w-]+\)|[a-zA-Z]+)$/.test(
+    value.trim(),
+  )
+    ? value.trim()
+    : ''
+}
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme || config.color,
@@ -78,28 +88,28 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null
   }
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join('\n')}
-}
-`,
-          )
-          .join('\n'),
-      }}
-    />
-  )
+  // Sanitize id to only allow alphanumeric and hyphens
+  const safeId = id.replace(/[^a-zA-Z0-9-]/g, '')
+
+  const cssText = Object.entries(THEMES)
+    .map(([theme, prefix]) => {
+      const vars = colorConfig
+        .map(([key, itemConfig]) => {
+          const rawColor =
+            itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+            itemConfig.color
+          if (!rawColor) return null
+          const safeColor = sanitizeCSSValue(rawColor)
+          const safeKey = key.replace(/[^a-zA-Z0-9-_]/g, '')
+          return safeColor ? `  --color-${safeKey}: ${safeColor};` : null
+        })
+        .filter(Boolean)
+        .join('\n')
+      return `${prefix} [data-chart=${safeId}] {\n${vars}\n}`
+    })
+    .join('\n')
+
+  return <style dangerouslySetInnerHTML={{ __html: cssText }} />
 }
 
 const ChartTooltip = RechartsPrimitive.Tooltip
