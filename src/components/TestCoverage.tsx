@@ -1,79 +1,79 @@
 'use client';
 import { Info } from 'lucide-react';
 
-const C = 2 * Math.PI * 35;
+const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
+const R = 36, C = 2 * Math.PI * R;
+
 const segments = [
-  { pct: 0.62, stroke: '#3DD68C', offset: 0 },
-  { pct: 0.28, stroke: '#E8C23C', offset: -(C * 0.62) },
-  { pct: 0.10, stroke: 'rgba(255,255,255,0.1)', offset: -(C * 0.90) },
+  { pct: 0.62, color: '#4ade80' },
+  { pct: 0.28, color: '#facc15' },
+  { pct: 0.10, color: '#27272a' },
 ];
-
 const legend = [
-  { dot: '#3DD68C', label: 'Covered', value: '62%', detail: '(1,348 lines)' },
-  { dot: '#E8C23C', label: 'Uncovered', value: '28%', detail: '(624 lines)' },
-  { dot: 'rgba(255,255,255,0.15)', label: 'Excluded', value: '10%', detail: '(198 lines)' },
+  { dot: '#4ade80', label: 'Covered',   value: '62%', detail: '1,348 lines' },
+  { dot: '#facc15', label: 'Uncovered', value: '28%', detail: '624 lines' },
+  { dot: '#3f3f46', label: 'Excluded',  value: '10%', detail: '198 lines' },
 ];
-
 const uncovered = [
-  { file: 'src/lib/processor.ts', pct: 32, color: '#E8453C' },
-  { file: 'src/hooks/useData.ts', pct: 45, color: '#E8863C' },
-  { file: 'src/components/Table.tsx', pct: 51, color: '#E8453C' },
+  { file: 'src/lib/processor.ts',     pct: 32, color: '#f87171' },
+  { file: 'src/hooks/useData.ts',     pct: 45, color: '#fb923c' },
+  { file: 'src/components/Table.tsx', pct: 51, color: '#f87171' },
 ];
 
 export default function TestCoverage() {
+  let offset = 0;
   return (
-    <div className="card flex flex-col">
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-sm font-semibold text-gray-200">Test Coverage</span>
-        <Info size={14} className="text-gray-500" />
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+        <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Test Coverage</span>
+        <Info size={14} style={{ color: '#52525b' }} />
       </div>
 
-      <div className="flex gap-5">
-        {/* Donut */}
-        <div className="flex flex-col items-center gap-3">
-          <svg width="100" height="100" viewBox="0 0 90 90" className="shrink-0">
-            <circle cx="45" cy="45" r="35" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="10" />
-            {segments.map((s, i) => (
-              <circle key={i} cx="45" cy="45" r="35" fill="none" stroke={s.stroke} strokeWidth="10"
-                strokeDasharray={`${C * s.pct} ${C * (1 - s.pct)}`} strokeDashoffset={s.offset}
-                transform="rotate(-90 45 45)" />
-            ))}
-            <text x="45" y="42" textAnchor="middle" fontSize="16" fontWeight="600" fill="#E2E2E9" fontFamily="inherit">62%</text>
-            <text x="45" y="55" textAnchor="middle" fontSize="10" fill="#9CA3AF" fontFamily="inherit">Covered</text>
-          </svg>
-        </div>
+      <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+        <svg width="100" height="100" viewBox="0 0 90 90" style={{ flexShrink: 0 }}>
+          <circle cx="45" cy="45" r={R} fill="none" stroke="#1c1c1f" strokeWidth="8" />
+          {segments.map(({ pct, color }, i) => {
+            const dash = C * pct;
+            const off = -offset * C - C * 0.25;
+            offset += pct;
+            return <circle key={i} cx="45" cy="45" r={R} fill="none" stroke={color} strokeWidth="8" strokeDasharray={`${dash} ${C - dash}`} strokeDashoffset={off} />;
+          })}
+          <text x="45" y="41" textAnchor="middle" fontSize="17" fontWeight="900" fill="#ffffff" fontFamily="inherit">62%</text>
+          <text x="45" y="54" textAnchor="middle" fontSize="9" fill="#52525b" fontFamily="inherit" letterSpacing="0.08em">COVERED</text>
+        </svg>
 
-        {/* Legend */}
-        <div className="flex flex-col gap-2 justify-center">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center' }}>
           {legend.map(({ dot, label, value, detail }) => (
-            <div key={label} className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full inline-block shrink-0" style={{ background: dot }} />
-              <span className="text-xs text-gray-200 font-medium">{label}</span>
-              <span className="text-xs text-gray-400">{value}</span>
-              <span className="text-[11px] text-gray-500">{detail}</span>
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: dot, flexShrink: 0 }} />
+              <span style={{ fontSize: '11px', color: '#e4e4e7', fontWeight: 500 }}>{label}</span>
+              <span style={{ fontFamily: mono, fontSize: '11px', color: '#a1a1aa' }}>{value}</span>
+              <span style={{ fontFamily: mono, fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{detail}</span>
             </div>
           ))}
         </div>
 
-        {/* Uncovered areas */}
-        <div className="flex-1 pl-5" style={{ borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
-          <div className="text-xs font-medium text-gray-400 mb-3">Uncovered Areas</div>
-          <div className="flex flex-col gap-2.5">
+        <div style={{ flex: 1, paddingLeft: '20px', borderLeft: '1px solid #27272a' }}>
+          <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 600, marginBottom: '12px' }}>Uncovered Areas</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {uncovered.map(({ file, pct, color }) => (
-              <div key={file} className="flex justify-between items-center">
-                <span className="text-[11px] text-gray-400 font-mono">{file}</span>
-                <span className="text-xs font-semibold font-mono" style={{ color }}>{pct}%</span>
+              <div key={file}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <span style={{ fontFamily: mono, fontSize: '10.5px', color: '#52525b', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file}</span>
+                  <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 700, color, flexShrink: 0, textAlign: 'right', minWidth: '32px' }}>{pct}%</span>
+                </div>
+                <div style={{ height: '2px', borderRadius: '1px', background: '#27272a' }}>
+                  <div style={{ width: `${pct}%`, height: '100%', borderRadius: '1px', background: color }} />
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="mt-4">
-        <button className="bg-transparent border-none p-0 text-xs cursor-pointer font-[inherit]" style={{ color: '#00D4FF' }}>
-          View full coverage report →
-        </button>
-      </div>
+      <button style={{ marginTop: '20px', background: 'transparent', border: 'none', padding: 0, fontSize: '12px', color: '#71717a', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' }}>
+        View full coverage report →
+      </button>
     </div>
   );
 }

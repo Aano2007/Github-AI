@@ -2,81 +2,71 @@
 import { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 
-type Issue = {
-  num: number;
-  title: string;
-  description: string;
-  file: string;
-  severity: string;
-  severityColor: string;
-  badgeBg: string;
-  badgeColor: string;
-};
+const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 
-const issues: Issue[] = [
-  { num: 1, title: 'Inefficient Loop in useData.ts', description: 'High time complexity causing performance issues', file: 'src/hooks/useData.ts:45', severity: 'Critical', severityColor: 'var(--status-critical)', badgeBg: 'rgba(232,69,60,0.18)', badgeColor: 'var(--status-critical)' },
-  { num: 2, title: 'Large Component: Dashboard.tsx', description: 'Component is doing too many things', file: 'src/components/Dashboard.tsx:1', severity: 'High', severityColor: 'var(--status-high)', badgeBg: 'rgba(232,134,60,0.18)', badgeColor: 'var(--status-high)' },
-  { num: 3, title: 'Unused Dependencies', description: '7 unused dependencies detected', file: 'package.json', severity: 'Medium', severityColor: 'var(--status-medium)', badgeBg: 'rgba(232,194,60,0.18)', badgeColor: 'var(--status-medium)' },
-  { num: 4, title: 'Duplicate Logic Detected', description: 'Similar code found in 3 places', file: 'Multiple files', severity: 'Low', severityColor: 'var(--status-low)', badgeBg: 'rgba(75,168,255,0.18)', badgeColor: 'var(--status-low)' },
-  { num: 5, title: 'Missing Error Boundaries', description: 'Add error boundaries for better stability', file: 'src/App.tsx', severity: 'Low', severityColor: 'var(--status-low)', badgeBg: 'rgba(75,168,255,0.18)', badgeColor: 'var(--status-low)' },
+const issues = [
+  { num: '01', title: 'Inefficient Loop in useData.ts',  desc: 'High time complexity causing performance issues', file: 'src/hooks/useData.ts:45',       dot: '#f87171' },
+  { num: '02', title: 'Large Component: Dashboard.tsx',  desc: 'Component is doing too many things',             file: 'src/components/Dashboard.tsx:1', dot: '#fb923c' },
+  { num: '03', title: 'Unused Dependencies',             desc: '7 unused dependencies detected',                 file: 'package.json',                   dot: '#facc15' },
+  { num: '04', title: 'Duplicate Logic Detected',        desc: 'Similar code found in 3 places',                 file: 'Multiple files',                 dot: '#60a5fa' },
+  { num: '05', title: 'Missing Error Boundaries',        desc: 'Add error boundaries for better stability',      file: 'src/App.tsx',                    dot: '#60a5fa' },
 ];
 
 export default function AITriagePath() {
-  const [hoveredIssue, setHoveredIssue] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [btnHovered, setBtnHovered] = useState<number | null>(null);
 
   return (
-    <div className="card flex flex-col">
-      {/* Header */}
-      <div className="mb-1">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-sm font-semibold text-gray-200">AI Triage Path</span>
-          <Sparkles size={14} style={{ color: '#7C6FF7' }} />
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+          <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>AI Triage Path</span>
+          <Sparkles size={14} style={{ color: '#52525b' }} />
         </div>
-        <div className="text-xs text-gray-500">Top issues to fix for maximum impact</div>
+        <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>Top issues to fix for maximum impact</div>
       </div>
 
-      {/* Issues */}
-      <div className="flex flex-col gap-0.5 mt-4">
-        {issues.map((issue) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {issues.map(({ num, title, desc, file, dot }, i) => (
           <div
-            key={issue.num}
-            onMouseEnter={() => setHoveredIssue(issue.num)}
-            onMouseLeave={() => setHoveredIssue(null)}
-            className="flex items-start gap-3 p-3 rounded-lg transition-colors"
-            style={{ background: hoveredIssue === issue.num ? '#1D2024' : 'transparent' }}
+            key={num}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+            style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '10px 8px', borderRadius: '6px', background: hovered === i ? '#1c1c1f' : 'transparent', transition: 'background 120ms ease' }}
           >
-            {/* Number badge */}
-            <div
-              className="w-6 h-6 rounded-full text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5"
-              style={{ background: issue.badgeBg, color: issue.badgeColor }}
-            >
-              {issue.num}
-            </div>
+            <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 600, color: '#3f3f46', letterSpacing: '0.04em', flexShrink: 0, width: '22px' }}>{num}</span>
 
-            {/* Content */}
-            <div className="flex-1 min-w-0">
-              <div className="text-[13px] font-medium text-gray-200 mb-0.5">{issue.title}</div>
-              <div className="text-[11px] text-gray-400 mb-1">{issue.description}</div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-gray-500 font-mono">{issue.file}</span>
-                <span className="flex items-center gap-1">
-                  <span className="w-[5px] h-[5px] rounded-full inline-block" style={{ background: issue.severityColor }} />
-                  <span className="text-[11px]" style={{ color: issue.severityColor }}>{issue.severity}</span>
-                </span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: '#e4e4e7', marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
+              <div style={{ fontSize: '11px', color: '#71717a', marginBottom: '3px' }}>{desc}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: dot, flexShrink: 0 }} />
+                <span style={{ fontFamily: mono, fontSize: '10.5px', color: '#3f3f46' }}>{file}</span>
               </div>
             </div>
 
-            {/* Auto-Fix PR button */}
-            <button className="flex items-center gap-1.5 border border-white/10 rounded-lg px-3 py-1.5 text-xs font-medium text-gray-400 bg-transparent cursor-pointer shrink-0 whitespace-nowrap hover:border-white/30 transition-colors font-[inherit]">
-              <Sparkles size={12} style={{ color: 'var(--accent-cyan)' }} /> Auto-Fix PR
+            <button
+              onMouseEnter={() => setBtnHovered(i)}
+              onMouseLeave={() => setBtnHovered(null)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '5px',
+                background: 'transparent',
+                border: btnHovered === i ? '1px solid #3f3f46' : '1px solid transparent',
+                borderRadius: '6px', padding: '5px 11px',
+                fontSize: '11px', fontWeight: 500,
+                color: btnHovered === i ? '#e4e4e7' : '#52525b',
+                cursor: 'pointer', flexShrink: 0, fontFamily: 'inherit',
+                whiteSpace: 'nowrap', transition: 'all 150ms ease',
+              }}
+            >
+              <Sparkles size={10} /> Auto-Fix PR
             </button>
           </div>
         ))}
       </div>
 
-      {/* Footer */}
-      <div className="mt-4 pl-3">
-        <button className="bg-transparent border-none p-0 text-xs cursor-pointer font-[inherit]" style={{ color: 'var(--accent-cyan)' }}>
+      <div style={{ marginTop: '16px', paddingLeft: '4px' }}>
+        <button style={{ background: 'transparent', border: 'none', padding: 0, fontSize: '12px', color: '#71717a', cursor: 'pointer', fontFamily: 'inherit' }}>
           View all issues (42) →
         </button>
       </div>

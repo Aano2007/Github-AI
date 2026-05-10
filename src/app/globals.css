@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -158,7 +159,6 @@ body {
 }
 
 /* --- Agent-OS Repo Page --- */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 .md3-surface {
   background-color: #1D2024;
@@ -243,7 +243,7 @@ body {
   margin-bottom: 28px;
 }
 
-.card { background: #1D2024; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px 28px; transition: background 150ms ease; box-shadow: none; }
+.card { background: #0B0E14; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 24px 28px; transition: background 150ms ease; box-shadow: none; }
 
 .card:hover {
   background: var(--bg-card-hover);
@@ -254,3 +254,65 @@ body {
 .dashboard-root ::-webkit-scrollbar        { width: 6px; }
 .dashboard-root ::-webkit-scrollbar-track  { background: var(--bg-base); }
 .dashboard-root ::-webkit-scrollbar-thumb  { background: var(--border-light); border-radius: 3px; }
+
+/* ── Glassmorphic analysis card ──────────────────────────────────── */
+:root {
+  --neon-green:  #6EE7B7;
+  --neon-yellow: #FCD34D;
+  --neon-orange: #FDBA74;
+  --neon-red:    #FCA5A5;
+  --neon-blue:   #93C5FD;
+  --neon-purple: #C4B5FD;
+  --neon-cyan:   #67E8F9;
+}
+
+.glass-card {
+  background: rgba(15, 17, 35, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 14px;
+  border: none;
+  position: relative;
+  padding: 24px 28px;
+}
+
+/* top-edge glass-rim lighting via ::before */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.11) 0px,
+    rgba(255,255,255,0.11) 1px,
+    transparent 1px
+  );
+}
+
+/* ── glass-card padding override (generous p-7) ─────────────────── */
+.glass-card { padding: 28px 32px; }
+
+/* ── Zinc minimal theme override ────────────────────────────────── */
+:root {
+  --md-background: #09090b;   /* zinc-950 */
+  --zinc-card:     #18181b;   /* zinc-900 */
+  --zinc-border:   #27272a;   /* zinc-800 */
+  --zinc-inner:    #1c1c1f;   /* zinc-850 */
+}
+
+/* Override glass-card to flat zinc */
+.glass-card {
+  background: var(--zinc-card) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--zinc-border) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+/* Remove the top-edge rim pseudo-element */
+.glass-card::before {
+  display: none !important;
+}

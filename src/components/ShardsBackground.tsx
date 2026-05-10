@@ -76,7 +76,8 @@ function Shards() {
   }, []);
 
   useFrame((state) => {
-    const elapsedTime = state.clock.getElapsedTime();
+    let elapsedTime = 0;
+    try { elapsedTime = state.clock.getElapsedTime(); } catch { return; }
     const cam = camera as THREE.PerspectiveCamera;
 
     meshRefs.current.forEach((mesh) => {

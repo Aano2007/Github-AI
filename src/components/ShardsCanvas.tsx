@@ -14,6 +14,9 @@ export default function ShardsCanvas() {
         gl={{ antialias: true, alpha: true, toneMappingExposure: 1.2 }}
         dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 1}
         shadows
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener('webglcontextlost', (e) => e.preventDefault(), false);
+        }}
       >
         <ShardsBackground />
       </Canvas>

@@ -51,9 +51,9 @@ export const useStore = create<Store>(() => ({
   setSelectedRepo: (repo) => useStore.setState({ selectedRepo: repo }),
   selectedGithubRepo: null,
   setSelectedGithubRepo: (repo) => useStore.setState({ selectedGithubRepo: repo }),
-  githubToken: typeof window !== 'undefined' ? localStorage.getItem('agentOS_token') : null,
+  githubToken: typeof window !== 'undefined' ? (() => { try { return localStorage.getItem('agentOS_token'); } catch { return null; } })() : null,
   githubUser: typeof window !== 'undefined'
-    ? (() => { const u = localStorage.getItem('agentOS_user'); return u ? JSON.parse(u) : null; })()
+    ? (() => { try { const u = localStorage.getItem('agentOS_user'); return u ? JSON.parse(u) : null; } catch { return null; } })()
     : null,
   setGithubSession: (token, user) => {
     localStorage.setItem('agentOS_token', token);
