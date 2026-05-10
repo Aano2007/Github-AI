@@ -1,112 +1,100 @@
 'use client'
 
-import { Lock, Info, Github, TrendingUp } from 'lucide-react'
+import { Lock, Github, TrendingUp, Info } from 'lucide-react'
 
 export default function OptimizationScoreCard() {
   return (
-    <div className="w-full bg-black p-6 min-h-screen">
+    <div className="min-h-screen bg-black p-6">
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        {/* Left: Title, Lock Icon, and Badges */}
-        <div className="flex items-center gap-4">
-          {/* Title */}
-          <h1 className="text-white font-bold text-xl">codebase-ai</h1>
-
-          {/* Green Padlock Icon */}
-          <Lock size={16} className="text-green-500" />
-
-          {/* Badges */}
+        <div className="flex items-center gap-3">
+          <span className="text-white font-bold text-lg">codebase-ai</span>
+          <Lock size={14} className="text-green-400" />
           <div className="flex items-center gap-2">
-            {/* TypeScript Badge */}
-            <div className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-              <span className="w-3 h-3 bg-blue-600 rounded-full"></span>
+            <span className="flex items-center gap-1.5 bg-gray-800 text-gray-300 text-xs font-medium px-3 py-1 rounded-full border border-gray-700">
+              <span className="w-2 h-2 rounded-full bg-blue-500" />
               TS TypeScript
-            </div>
-
-            {/* Next.js Badge */}
-            <div className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-              <span className="w-3 h-3 bg-gray-600 rounded-full"></span>
+            </span>
+            <span className="flex items-center gap-1.5 bg-gray-800 text-gray-300 text-xs font-medium px-3 py-1 rounded-full border border-gray-700">
+              <span className="w-2 h-2 rounded-full bg-gray-500" />
               N Next.js
-            </div>
-
-            {/* GitHub Branch Badge */}
-            <div className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-              <Github size={12} />
+            </span>
+            <span className="flex items-center gap-1.5 bg-gray-800 text-gray-300 text-xs font-medium px-3 py-1 rounded-full border border-gray-700">
+              <Github size={11} />
               main
-            </div>
+            </span>
           </div>
         </div>
-
-        {/* Right: Last Analyzed */}
         <span className="text-gray-500 text-xs">Last analyzed: 2 mins ago</span>
       </div>
 
       {/* Main Card */}
-      <div className="bg-slate-900 border border-gray-700 rounded-lg p-8 flex gap-12">
-        {/* Left Side: Score and Info */}
-        <div className="flex flex-col justify-center min-w-fit">
-          {/* Title with Info Icon */}
-          <div className="flex items-center gap-2 mb-6">
-            <h2 className="text-gray-300 font-semibold text-sm">Optimization Score</h2>
-            <Info size={16} className="text-gray-600" />
+      <div className="w-full bg-slate-900 border border-gray-800 rounded-2xl p-8 flex gap-12 items-center">
+
+        {/* Left — Score */}
+        <div className="flex flex-col shrink-0">
+          <div className="flex items-center gap-2 mb-5">
+            <span className="text-gray-300 text-sm font-semibold">Optimization Score</span>
+            <Info size={14} className="text-gray-600" />
           </div>
 
-          {/* Score Number */}
-          <div className="flex items-baseline gap-1 mb-4">
-            <span className="text-cyan-400 font-bold text-8xl leading-none">75</span>
-            <span className="text-cyan-400 font-bold text-2xl mb-8">%</span>
-            <span className="text-gray-500 text-sm ml-4">Optimized</span>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-cyan-400 font-bold leading-none" style={{ fontSize: '88px' }}>75</span>
+            <span className="text-cyan-400 font-bold text-3xl mb-4">%</span>
+            <span className="text-gray-500 text-sm ml-3 mb-2">Optimized</span>
           </div>
 
-          {/* Improvement Badge */}
-          <div className="bg-gray-800 text-green-400 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 w-fit">
-            <TrendingUp size={14} />
+          <div className="flex items-center gap-1.5 bg-gray-800 text-green-400 text-xs font-medium px-3 py-1.5 rounded-full w-fit mt-2">
+            <TrendingUp size={13} />
             8% vs last scan
           </div>
         </div>
 
-        {/* Right Side: Progress Bar */}
+        {/* Right — Progress Bar */}
         <div className="flex-1 flex flex-col justify-center">
-          {/* Progress Track with Markers */}
-          <div className="mb-8">
-            {/* Track Background */}
-            <div className="relative h-2 bg-gray-700 rounded-full overflow-visible mb-10">
-              {/* Tick Marks */}
-              <div className="absolute w-full h-2 flex justify-between px-0">
-                <div className="absolute left-0 top-2 w-0.5 h-3 bg-gray-600" />
-                <div className="absolute left-1/2 -translate-x-1/2 top-2 w-0.5 h-3 bg-gray-600" />
-                <div className="absolute right-0 top-2 w-0.5 h-3 bg-gray-600" />
-              </div>
+          <div className="relative mb-3">
 
-              {/* Filled Progress Bar - Gradient from Blue to Cyan */}
+            {/* 75% floating label */}
+            <div
+              className="absolute -top-7 text-cyan-400 font-bold text-sm whitespace-nowrap"
+              style={{ left: '75%', transform: 'translateX(-50%)' }}
+            >
+              75%
+            </div>
+
+            {/* Track */}
+            <div className="relative h-2.5 bg-gray-800 rounded-full overflow-visible">
+
+              {/* Fill */}
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"
+                className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
                 style={{ width: '75%' }}
               />
 
-              {/* Cyan Marker at 75% */}
+              {/* Cyan marker at 75% */}
               <div
-                className="absolute top-1/2 -translate-y-1/2 w-1 h-6 bg-cyan-400 rounded-full"
+                className="absolute top-1/2 w-0.5 h-6 bg-cyan-400 rounded-full"
                 style={{ left: '75%', transform: 'translateX(-50%) translateY(-50%)' }}
               />
 
-              {/* 75% Label */}
-              <div
-                className="absolute -top-8 text-cyan-400 font-bold text-sm whitespace-nowrap"
-                style={{ left: '75%', transform: 'translateX(-50%)' }}
-              >
-                75%
+              {/* Tick marks */}
+              <div className="absolute inset-0">
+                <div className="absolute left-0 top-full mt-0.5 w-px h-2 bg-gray-600" />
+                <div className="absolute left-1/2 top-full mt-0.5 w-px h-2 bg-gray-600 -translate-x-1/2" />
+                <div className="absolute right-0 top-full mt-0.5 w-px h-2 bg-gray-600" />
               </div>
             </div>
+          </div>
 
-            {/* Percentage Labels */}
-            <div className="flex justify-between px-0 text-gray-500 text-xs">
-              <span>0%</span>
-              <span>50%</span>
-              <span>100%</span>
-            </div>
+          {/* Scale labels */}
+          <div className="flex justify-between text-gray-600 text-xs mt-3 px-0">
+            <span>0%</span>
+            <span>50%</span>
+            <span>100%</span>
           </div>
         </div>
+
       </div>
     </div>
   )
