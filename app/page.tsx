@@ -1,5 +1,10 @@
-import OptimizationScoreCard from '@/components/optimization-score-card'
+import DashboardShell from '@/components/dashboard-shell'
 
 export default function Home() {
-  return <OptimizationScoreCard />
+  return (
+    <DashboardShell>
+      {/* Sections will be added in subsequent phases */}
+      <div className="text-gray-500 text-sm">Dashboard content loading...</div>
+    </DashboardShell>
+  )
 }
