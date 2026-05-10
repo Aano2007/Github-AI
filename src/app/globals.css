@@ -185,3 +185,72 @@ body {
   height: 4px;
   border-radius: 2px;
 }
+
+/* ============================================================
+   DASHBOARD — CSS CUSTOM PROPERTIES & FOUNDATION
+   ============================================================ */
+
+:root {
+  /* Background layers — synced to Repository page */
+  --bg-base:        #111318;
+  --bg-card:        #1D2024;
+  --bg-card-hover:  #212327;
+  --bg-input:       #282A2F;
+
+  /* Borders */
+  --border:         rgba(255, 255, 255, 0.07);
+  --border-light:   rgba(255, 255, 255, 0.10);
+
+  /* Text */
+  --text-primary:   #E8EBF0;
+  --text-secondary: #8A95A3;
+  --text-tertiary:  #505A66;
+
+  /* Accents */
+  --accent-cyan:        #00D4FF;
+  --accent-cyan-dim:    rgba(0, 212, 255, 0.09);
+  --accent-purple:      #7C6FF7;
+  --accent-purple-dim:  rgba(124, 111, 247, 0.09);
+
+  /* Status */
+  --status-critical: #E8453C;
+  --status-high:     #E8863C;
+  --status-medium:   #E8C23C;
+  --status-low:      #4BA8FF;
+  --status-good:     #3DD68C;
+
+  /* Code diff */
+  --code-added:        #1A3A2A;
+  --code-removed:      #3A1A1A;
+  --code-added-text:   #3DD68C;
+  --code-removed-text: #E8453C;
+}
+
+.dashboard-root {
+  background: #111318;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.page-wrapper > * {
+  margin-bottom: 28px;
+}
+
+.card { background: #1D2024; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px 28px; transition: background 150ms ease; box-shadow: none; }
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-light);
+}
+
+/* ── Dashboard scrollbar ─────────────────────────────────────────── */
+.dashboard-root ::-webkit-scrollbar        { width: 6px; }
+.dashboard-root ::-webkit-scrollbar-track  { background: var(--bg-base); }
+.dashboard-root ::-webkit-scrollbar-thumb  { background: var(--border-light); border-radius: 3px; }
