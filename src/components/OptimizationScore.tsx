@@ -1,12 +1,12 @@
 'use client';
-import { Info } from 'lucide-react';
+import { Info } from '@phosphor-icons/react';
 
 export default function OptimizationScore() {
   return (
     <div className="glass-card">
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
         <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Optimization Score</span>
-        <Info size={14} style={{ color: '#52525b' }} />
+        <Info size={14} weight="regular" style={{ color: '#52525b' }} />
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
@@ -17,7 +17,7 @@ export default function OptimizationScore() {
             <span style={{ fontSize: '15px', color: '#71717a', marginLeft: '8px', fontWeight: 400 }}>Optimized</span>
           </div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '10px', background: '#1c1c1f', border: '1px solid #27272a', borderRadius: '20px', padding: '3px 10px' }}>
-            <span style={{ fontSize: '12px', color: '#4ade80' }}>▲</span>
+            <span style={{ fontSize: '12px', color: '#52525b' }}>▲</span>
             <span style={{ fontSize: '12px', fontWeight: 600, color: '#a1a1aa' }}>8% vs last scan</span>
           </div>
         </div>

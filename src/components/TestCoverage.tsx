@@ -1,13 +1,13 @@
 'use client';
-import { Info } from 'lucide-react';
+import { Info } from '@phosphor-icons/react';
 
 const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 const R = 36, C = 2 * Math.PI * R;
 
 const segments = [
-  { pct: 0.62, color: '#4ade80' },
-  { pct: 0.28, color: '#facc15' },
-  { pct: 0.10, color: '#27272a' },
+  { pct: 0.62, color: '#3f3f46' },
+  { pct: 0.28, color: '#27272a' },
+  { pct: 0.10, color: '#1c1c1f' },
 ];
 const legend = [
   { dot: '#4ade80', label: 'Covered',   value: '62%', detail: '1,348 lines' },
@@ -15,9 +15,9 @@ const legend = [
   { dot: '#3f3f46', label: 'Excluded',  value: '10%', detail: '198 lines' },
 ];
 const uncovered = [
-  { file: 'src/lib/processor.ts',     pct: 32, color: '#f87171' },
-  { file: 'src/hooks/useData.ts',     pct: 45, color: '#fb923c' },
-  { file: 'src/components/Table.tsx', pct: 51, color: '#f87171' },
+  { file: 'src/lib/processor.ts',     pct: 32 },
+  { file: 'src/hooks/useData.ts',     pct: 45 },
+  { file: 'src/components/Table.tsx', pct: 51 },
 ];
 
 export default function TestCoverage() {
@@ -26,7 +26,7 @@ export default function TestCoverage() {
     <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
         <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Test Coverage</span>
-        <Info size={14} style={{ color: '#52525b' }} />
+        <Info size={14} weight="regular" style={{ color: '#52525b' }} />
       </div>
 
       <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
@@ -54,16 +54,16 @@ export default function TestCoverage() {
         </div>
 
         <div style={{ flex: 1, paddingLeft: '20px', borderLeft: '1px solid #27272a' }}>
-          <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 600, marginBottom: '12px' }}>Uncovered Areas</div>
+          <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.25em', fontWeight: 600, marginBottom: '12px' }}>Uncovered Areas</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {uncovered.map(({ file, pct, color }) => (
+            {uncovered.map(({ file, pct }) => (
               <div key={file}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span style={{ fontFamily: mono, fontSize: '10.5px', color: '#52525b', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file}</span>
-                  <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 700, color, flexShrink: 0, textAlign: 'right', minWidth: '32px' }}>{pct}%</span>
+                  <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 700, color: '#71717a', marginLeft: 'auto', paddingLeft: '8px', textAlign: 'right', minWidth: '36px', display: 'block' }}>{pct}%</span>
                 </div>
                 <div style={{ height: '2px', borderRadius: '1px', background: '#27272a' }}>
-                  <div style={{ width: `${pct}%`, height: '100%', borderRadius: '1px', background: color }} />
+                  <div style={{ width: `${pct}%`, height: '100%', borderRadius: '1px', background: '#3f3f46' }} />
                 </div>
               </div>
             ))}

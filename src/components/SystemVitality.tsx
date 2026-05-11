@@ -1,5 +1,5 @@
 'use client';
-import { Info } from 'lucide-react';
+import { Info } from '@phosphor-icons/react';
 
 const Sparkline = ({ color, points }: { color: string; points: number[] }) => {
   const w = 100, h = 44;
@@ -25,10 +25,10 @@ const Sparkline = ({ color, points }: { color: string; points: number[] }) => {
 };
 
 const metrics = [
-  { label: 'Quality',        score: 82, color: 'var(--neon-green)',  spark: [70,74,72,78,80,79,82], status: 'Good',     dot: 'var(--neon-green)' },
-  { label: 'Performance',    score: 74, color: 'var(--neon-yellow)', spark: [68,71,69,73,70,72,74], status: 'Fair',     dot: 'var(--neon-yellow)' },
-  { label: 'Security',       score: 91, color: 'var(--neon-green)',  spark: [85,87,88,86,89,90,91], status: 'Excellent',dot: 'var(--neon-green)' },
-  { label: 'Technical Debt', score: 64, color: 'var(--neon-orange)', spark: [72,69,67,70,66,65,64], status: 'Moderate', dot: 'var(--neon-orange)' },
+  { label: 'Quality',        score: 82, color: '#52525b', spark: [70,74,72,78,80,79,82], status: 'Good',     dot: '#4ade80' },
+  { label: 'Performance',    score: 74, color: '#52525b', spark: [68,71,69,73,70,72,74], status: 'Fair',     dot: '#facc15' },
+  { label: 'Security',       score: 91, color: '#52525b', spark: [85,87,88,86,89,90,91], status: 'Excellent',dot: '#4ade80' },
+  { label: 'Technical Debt', score: 64, color: '#52525b', spark: [72,69,67,70,66,65,64], status: 'Moderate', dot: '#fb923c' },
 ];
 
 export default function SystemVitality() {
@@ -37,7 +37,7 @@ export default function SystemVitality() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>System Vitality</span>
-          <Info size={14} style={{ color: '#8E9099' }} />
+          <Info size={14} weight="regular" style={{ color: '#8E9099' }} />
         </div>
         <a href="#" style={{ fontSize: '12px', color: '#C4C6D0', textDecoration: 'none' }}>View full metrics →</a>
       </div>
@@ -48,8 +48,8 @@ export default function SystemVitality() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: '10px', color: '#8E9099', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.12em' }}>{label}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: dot }} />
-                <span style={{ fontSize: '10px', color: dot }}>{status}</span>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: dot }} />
+                <span style={{ fontSize: '10px', color: '#52525b' }}>{status}</span>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>

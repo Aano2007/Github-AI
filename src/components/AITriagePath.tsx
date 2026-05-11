@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkle, Lightning } from '@phosphor-icons/react';
 
 const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 
@@ -21,7 +21,7 @@ export default function AITriagePath() {
       <div style={{ marginBottom: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
           <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>AI Triage Path</span>
-          <Sparkles size={14} style={{ color: '#52525b' }} />
+          <Sparkle size={14} weight="fill" style={{ color: '#52525b' }} />
         </div>
         <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>Top issues to fix for maximum impact</div>
       </div>
@@ -59,7 +59,7 @@ export default function AITriagePath() {
                 whiteSpace: 'nowrap', transition: 'all 150ms ease',
               }}
             >
-              <Sparkles size={10} /> Auto-Fix PR
+              <Sparkle size={10} weight="fill" /> Auto-Fix PR
             </button>
           </div>
         ))}

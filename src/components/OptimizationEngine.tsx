@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { CheckCircle, Sparkles, Info } from 'lucide-react';
+import { CheckCircle, Sparkle, Info } from '@phosphor-icons/react';
 
 const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 
@@ -40,7 +40,7 @@ export default function OptimizationEngine() {
       <div style={{ marginBottom: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
           <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Optimization Engine</span>
-          <Info size={14} style={{ color: '#52525b' }} />
+          <Info size={14} weight="regular" style={{ color: '#52525b' }} />
           <span style={{ fontSize: '9px', fontWeight: 700, padding: '2px 7px', borderRadius: '4px', background: '#27272a', color: '#a1a1aa', border: '1px solid #3f3f46', marginLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.14em' }}>Beta</span>
         </div>
         <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>AI suggests a refactor to improve performance</div>
@@ -68,7 +68,7 @@ export default function OptimizationEngine() {
 
       {/* Why this is better */}
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '16px', padding: '14px', background: '#1c1c1f', border: '1px solid #27272a', borderRadius: '8px' }}>
-        <CheckCircle size={15} style={{ color: '#4ade80', flexShrink: 0, marginTop: '1px' }} />
+        <CheckCircle size={15} weight="fill" style={{ color: '#52525b', flexShrink: 0, marginTop: '1px' }} />
         <div>
           <div style={{ fontSize: '13px', fontWeight: 600, color: '#e4e4e7', marginBottom: '4px' }}>Why this is better?</div>
           <div style={{ fontSize: '12px', color: '#71717a', lineHeight: 1.65 }}>
@@ -93,7 +93,7 @@ export default function OptimizationEngine() {
           letterSpacing: '0.01em',
         }}
       >
-        <Sparkles size={14} />
+        <Sparkle size={14} weight="fill" />
         {applied ? 'Suggestion Applied ✓' : 'Apply Suggestion'}
       </button>
     </div>

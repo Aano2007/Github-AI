@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Info } from 'lucide-react';
+import { Info } from '@phosphor-icons/react';
 
 const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 
@@ -79,7 +79,7 @@ export default function RepoTopography() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Repository Topography</span>
-          <Info size={14} style={{ color: '#8E9099' }} />
+          <Info size={14} weight="regular" style={{ color: '#8E9099' }} />
         </div>
 
         {/* Minimal text-link tabs */}

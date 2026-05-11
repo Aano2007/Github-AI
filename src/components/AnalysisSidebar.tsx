@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { LayoutGrid, Search, MessageCircle } from 'lucide-react';
+import { SquaresFour, MagnifyingGlass, ChatCircle } from '@phosphor-icons/react';
 
 const NAV_ITEMS = [
-  { id: 'grid', icon: LayoutGrid, label: 'Dashboard' },
-  { id: 'search', icon: Search, label: 'Search' },
-  { id: 'chat', icon: MessageCircle, label: 'Chat' },
+  { id: 'grid',   icon: SquaresFour,     label: 'Dashboard' },
+  { id: 'search', icon: MagnifyingGlass, label: 'Search'    },
+  { id: 'chat',   icon: ChatCircle,      label: 'Chat'      },
 ];
 
 export default function AnalysisSidebar() {
@@ -47,15 +47,15 @@ export default function AnalysisSidebar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: isActive ? 'var(--accent-cyan-dim)' : isHovered ? 'var(--bg-input)' : 'transparent',
+                background: isActive ? '#27272a' : isHovered ? '#1c1c1f' : 'transparent',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                color: isActive ? 'var(--accent-cyan)' : 'var(--text-tertiary)',
+                color: isActive ? '#e4e4e7' : '#52525b',
                 transition: 'all 120ms ease',
               }}
             >
-              <Icon size={18} />
+              <Icon size={18} weight={isActive ? 'fill' : 'regular'} />
             </button>
 
             {isHovered && (

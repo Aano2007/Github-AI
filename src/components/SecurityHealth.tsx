@@ -1,17 +1,20 @@
 'use client';
 import { useState } from 'react';
-import { ShieldAlert, AlertTriangle, CircleDot, CheckCircle2, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { ShieldWarning, Warning, CircleHalf, CheckCircle, CaretDown, CaretUp, Info } from '@phosphor-icons/react';
+
+const mono = "'JetBrains Mono','Fira Code','Courier New',monospace";
 
 const segments = [
-  { Icon: ShieldAlert,   iconColor: '#f87171', dot: '#f87171', count: 2,   label: 'Critical',   sub: 'vulnerabilities' },
-  { Icon: AlertTriangle, iconColor: '#fb923c', dot: '#fb923c', count: 5,   label: 'High',       sub: 'vulnerabilities' },
-  { Icon: CircleDot,     iconColor: '#facc15', dot: '#facc15', count: 7,   label: 'Medium',     sub: 'vulnerabilities' },
-  { Icon: CheckCircle2,  iconColor: '#4ade80', dot: '#4ade80', count: 128, label: 'Up to date', sub: 'dependencies' },
+  { Icon: ShieldWarning, iconColor: '#f87171', count: 2,   label: 'Critical',   sub: 'vulnerabilities' },
+  { Icon: Warning,       iconColor: '#fb923c', count: 5,   label: 'High',       sub: 'vulnerabilities' },
+  { Icon: CircleHalf,    iconColor: '#facc15', count: 7,   label: 'Medium',     sub: 'vulnerabilities' },
+  { Icon: CheckCircle,   iconColor: '#4ade80', count: 128, label: 'Up to date', sub: 'dependencies'    },
 ];
+
 const details = [
-  { dot: '#f87171', label: 'Critical', text: 'lodash@4.17.20 — Prototype pollution (CVE-2021-23337). Upgrade to 4.17.21+' },
-  { dot: '#fb923c', label: 'High',     text: 'node-fetch@2.6.0 — SSRF vulnerability. Upgrade to 2.6.7+' },
-  { dot: '#facc15', label: 'Medium',   text: 'Multiple packages with known medium-severity issues. Run npm audit for full list.' },
+  { severity: 'CRITICAL', pkg: 'lodash@4.17.20',    desc: 'Prototype pollution (CVE-2021-23337)',          fix: 'Upgrade to 4.17.21+' },
+  { severity: 'HIGH',     pkg: 'node-fetch@2.6.0',  desc: 'SSRF vulnerability',                            fix: 'Upgrade to 2.6.7+'   },
+  { severity: 'MEDIUM',   pkg: 'multiple packages', desc: 'Known medium-severity issues in dependencies',  fix: 'Run npm audit'       },
 ];
 
 export default function SecurityHealth() {
@@ -21,18 +24,18 @@ export default function SecurityHealth() {
     <div className="glass-card">
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
         <span style={{ fontSize: '16px', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>Security &amp; Dependency Health</span>
-        <Info size={14} style={{ color: '#52525b' }} />
+        <Info size={14} weight="regular" style={{ color: '#52525b' }} />
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-          {segments.map(({ Icon, iconColor, dot, count, label, sub }) => (
-            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#1c1c1f', border: '1px solid #27272a', borderRadius: '10px', padding: '14px 16px' }}>
-              <Icon size={18} style={{ color: iconColor, flexShrink: 0 }} />
+          {segments.map(({ Icon, iconColor, count, label, sub }) => (
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#18181b', border: '1px solid #27272a', borderRadius: '10px', padding: '14px 16px' }}>
+              <Icon size={18} weight="fill" style={{ color: iconColor, flexShrink: 0 }} />
               <div>
                 <div style={{ fontSize: '26px', fontWeight: 900, color: '#e4e4e7', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{count}</div>
-                <div style={{ fontSize: '10px', fontWeight: 600, color: '#a1a1aa', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</div>
-                <div style={{ fontSize: '10px', color: '#52525b', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{sub}</div>
+                <div style={{ fontSize: '10px', fontWeight: 600, color: '#71717a', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</div>
+                <div style={{ fontSize: '10px', color: '#3f3f46', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{sub}</div>
               </div>
             </div>
           ))}
@@ -40,20 +43,30 @@ export default function SecurityHealth() {
 
         <button
           onClick={() => setExpanded(!expanded)}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: '1px solid #27272a', borderRadius: '8px', padding: '8px 14px', fontSize: '12px', color: '#a1a1aa', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'border-color 120ms ease' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: '1px solid #27272a', borderRadius: '8px', padding: '8px 14px', fontSize: '12px', color: '#71717a', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0, transition: 'border-color 120ms ease' }}
           onMouseEnter={e => e.currentTarget.style.borderColor = '#3f3f46'}
           onMouseLeave={e => e.currentTarget.style.borderColor = '#27272a'}
         >
-          Expand details {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          Expand details {expanded ? <CaretUp size={14} weight="bold" /> : <CaretDown size={14} weight="bold" />}
         </button>
       </div>
 
       {expanded && (
-        <div style={{ marginTop: '14px', background: '#1c1c1f', border: '1px solid #27272a', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {details.map(({ dot, label, text }) => (
-            <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#71717a', lineHeight: 1.6 }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: dot, flexShrink: 0, marginTop: '5px' }} />
-              <span><span style={{ fontWeight: 600, color: '#a1a1aa' }}>{label}: </span>{text}</span>
+        <div style={{ marginTop: '14px', border: '1px solid #27272a', borderRadius: '8px', overflow: 'hidden' }}>
+          {details.map(({ severity, pkg, desc, fix }, i) => (
+            <div key={severity} style={{
+              display: 'grid', gridTemplateColumns: '72px 1fr auto',
+              alignItems: 'center', gap: '16px',
+              padding: '12px 16px',
+              borderTop: i === 0 ? 'none' : '1px solid #27272a',
+              background: '#18181b',
+            }}>
+              <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 700, color: '#3f3f46', textTransform: 'uppercase', letterSpacing: '0.18em' }}>{severity}</span>
+              <div>
+                <span style={{ fontFamily: mono, fontSize: '11px', color: '#71717a' }}>{pkg}</span>
+                <span style={{ fontSize: '11px', color: '#3f3f46', marginLeft: '8px' }}>— {desc}</span>
+              </div>
+              <span style={{ fontFamily: mono, fontSize: '10px', color: '#52525b', whiteSpace: 'nowrap' }}>{fix}</span>
             </div>
           ))}
         </div>

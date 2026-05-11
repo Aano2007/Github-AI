@@ -88,7 +88,7 @@ export const Repositories = () => {
   return (
     <main className="max-w-7xl mx-auto px-8 py-10">
       <header className="mb-10">
-        <p className="text-blue-400 mb-2" style={{ fontFamily: "'Dancing Script', cursive", fontSize: '1.1rem' }}>
+        <p className="text-zinc-500 mb-2" style={{ fontFamily: "'Dancing Script', cursive", fontSize: '1.1rem' }}>
           Hey, {mounted ? (githubUser?.name || githubUser?.login || 'there') : 'there'}
         </p>
         <h1 className="text-4xl font-semibold mb-2">Available Repositories</h1>
@@ -100,8 +100,8 @@ export const Repositories = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-48 gap-5">
           <div className="relative w-12 h-12">
-            <div className="absolute inset-0 rounded-full border-2 border-white/10" />
-            <div className="absolute inset-0 rounded-full border-2 border-t-transparent border-r-transparent border-b-transparent animate-spin border-l-blue-500" />
+            <div className="absolute inset-0 rounded-full border-2 border-zinc-800" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-transparent border-r-transparent border-b-transparent animate-spin border-l-zinc-500" />
           </div>
           <p className="text-sm font-medium text-gray-500">Scanning repositories…</p>
         </div>
@@ -121,17 +121,17 @@ export const Repositories = () => {
                 placeholder="Search repositories..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-[#1a1c1e] border border-white/10 rounded-full py-3.5 pl-12 pr-6 outline-none focus:border-blue-500/50 transition-all text-sm"
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-full py-3.5 pl-12 pr-6 outline-none focus:border-zinc-600 transition-all text-sm"
               />
             </div>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
-                <button className="px-5 py-1.5 rounded-full text-xs font-medium bg-blue-600 text-white shadow-lg shadow-blue-900/20 border border-blue-600">All</button>
-                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-white/10 text-gray-400 hover:border-white/30">Clean {cleanCount}</button>
-                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-white/10 text-gray-400 hover:border-white/30">Issues {repos.filter(r => mockDebt(r) > 60).length}</button>
-                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-white/10 text-gray-400 hover:border-white/30">Scanning {repos.filter(r => mockDebt(r) > 35 && mockDebt(r) <= 60).length}</button>
+                <button className="px-5 py-1.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-200 border border-zinc-700">All</button>
+                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-zinc-800 text-zinc-500 hover:border-zinc-600">Clean {cleanCount}</button>
+                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-zinc-800 text-zinc-500 hover:border-zinc-600">Issues {repos.filter(r => mockDebt(r) > 60).length}</button>
+                <button className="px-5 py-1.5 rounded-full text-xs font-medium border border-zinc-800 text-zinc-500 hover:border-zinc-600">Scanning {repos.filter(r => mockDebt(r) > 35 && mockDebt(r) <= 60).length}</button>
               </div>
-              <span className="text-xs text-blue-400 font-medium">{filtered.length} results</span>
+              <span className="text-xs text-zinc-500 font-medium">{filtered.length} results</span>
             </div>
           </div>
 

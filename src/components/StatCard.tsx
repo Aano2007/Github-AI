@@ -61,7 +61,7 @@ export default function StatCard({ label, value, sub, Icon, suitIndex = 0 }: Sta
 
       <div className="flex justify-between items-start relative z-20">
         <p className="text-base font-semibold text-gray-200">{label}</p>
-        <div className="bg-blue-400/10 text-blue-400 p-2 rounded-xl group-hover:[&>svg]:rotate-12 transition-transform duration-300">
+        <div className="bg-zinc-800 text-zinc-400 p-2 rounded-xl group-hover:[&>svg]:rotate-12 transition-transform duration-300">
           <Icon className="w-5 h-5 transition-transform duration-300" />
         </div>
       </div>

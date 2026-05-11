@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { RotateCw, ExternalLink, MoreHorizontal } from 'lucide-react';
+import { ArrowClockwise, ArrowSquareOut, DotsThree } from '@phosphor-icons/react';
 
 export default function AnalysisNav() {
   const [activeTab, setActiveTab] = useState<'analysis' | 'history'>('analysis');
@@ -87,7 +87,7 @@ export default function AnalysisNav() {
             transition: 'all 120ms ease',
           }}
         >
-          <RotateCw size={14} />
+          <ArrowClockwise size={14} weight="bold" />
           Re-Scan
         </button>
         <button
@@ -107,7 +107,7 @@ export default function AnalysisNav() {
           }}
         >
           View Repository
-          <ExternalLink size={14} />
+          <ArrowSquareOut size={14} weight="bold" />
         </button>
         <button
           style={{
@@ -123,7 +123,7 @@ export default function AnalysisNav() {
             transition: 'all 120ms ease',
           }}
         >
-          <MoreHorizontal size={16} />
+          <DotsThree size={16} weight="bold" />
         </button>
       </div>
     </nav>
