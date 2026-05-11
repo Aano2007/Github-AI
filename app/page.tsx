@@ -1,10 +1,11 @@
 import DashboardShell from '@/components/dashboard-shell'
+import { OptimizationScore, SystemVitality } from '@/components/metrics-cards'
 
 export default function Home() {
   return (
     <DashboardShell>
-      {/* Sections will be added in subsequent phases */}
-      <div className="text-gray-500 text-sm">Dashboard content loading...</div>
+      <OptimizationScore />
+      <SystemVitality />
     </DashboardShell>
   )
 }
